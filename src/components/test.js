@@ -22,42 +22,48 @@ const Test = () => {
   const d3Container = useRef(null)
 
   useEffect(() => {
+    // const popByCountry = d3
+    //   .nest()
+    //   .key(d => d.country)
+    //   .rollup(countryPops => {
+    //     return d3.sum(countryPops, countryPop => countryPop.pop)
+    //   })
+    //   .entries(data.allGapminderJson.nodes)
+    //   .map(function(d){
+    //       return { country: d.key, pop: d.value };
+    //   });
 
-    const popByCountry = d3
-      .nest()
-      .key(d => d.country)
-      .rollup(countryPops => {
-        return d3.sum(countryPops, countryPop => countryPop.pop)
-      })
-      .entries(data.allGapminderJson.nodes)
-      .map(function(d){
-          return { country: d.key, pop: d.value };
-      });
+    const popByCountry2005 = data.allGapminderJson.nodes.filter(country => country.year === 2005)
 
-    d3.selectAll('li')
-    .data(popByCountry)
-    .join('li')
-      .text(d => `${d.country}: ${d.pop}`)
-    // return () => {
-    //   cleanup
-    // };
-  }, [data.allGapminderJson.nodes])
+    const ol = d3.select(d3Container.current)
+
+    const x = d3.scaleLinear()
+      .domain([0, d3.max(popByCountry2005, country => country.pop)])
+      .range([0, 100])
+
+    const color = d3.scaleOrdinal(d3.schemeTableau10)
+      .domain(popByCountry2005.map(country => country.id))
+
+    ol
+      .selectAll('div')
+      .data(popByCountry2005)
+      .join('div')
+        .style('background', country => color(country.id))
+        .style('border', '1px solid white')
+        .style('font-size', 'small')
+        .style('color', 'white')
+        .style('text-align', 'right')
+        .style('padding', '3px')
+        .style('width', country => `${x(country.pop)}%`)
+        .text(country => country.life_expect)
+
+  }, [data.allGapminderJson.nodes, d3Container.current])
 
 
   return (
     <>
       <h1>Hello</h1>
-      {/* <pre>{JSON.stringify(data, null, 4)}</pre> */}
       <ol ref={ d3Container }>
-        {/* {
-          data.allGapminderJson.nodes.map(node => {
-            return (
-              <li
-                key={ node.id }>
-              </li>
-            )
-          })
-        } */}
       </ol>
     </>
   )
