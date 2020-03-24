@@ -36,7 +36,7 @@ const GapminderData = () => {
       setYear(year + 5)
       setCountries(data.allGapminderJson.nodes.filter(country => country.year === year + 5))
     }
-  }, 2000)
+  }, 3000)
 
 
   // useInterval(() => {    // Your custom logic here    setCount(count + 1);  }, 1000);
