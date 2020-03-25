@@ -20,14 +20,18 @@ const GapminderData = () => {
     }
   `)
 
-  // let [count, setCount] = useState(0);
-  let [year, setYear] = useState(1955);
-  let [countries, setCountries] = useState(data.allGapminderJson.nodes.filter(country => country.year === year));
+  let [year, setYear] = useState(1955)
+  let [countries, setCountries] = useState(data.allGapminderJson
+    .nodes.filter(country => country.year === year))
 
-  // let countries = data.allGapminderJson.nodes.filter(country => country.year === 1955)
+
+  let [width, setWidth] = useState(1000)
 
   useInterval(() => {
-    // console.log('countires', counties)
+
+    const clientWidth = document.getElementsByTagName('main')[0].clientWidth
+
+    setWidth(clientWidth > 1000 ? 1000 : clientWidth)
 
     if (year === 2005) {
       setYear(1955)
@@ -38,14 +42,7 @@ const GapminderData = () => {
     }
   }, 3000)
 
-
-  // useInterval(() => {    // Your custom logic here    setCount(count + 1);  }, 1000);
-
-  // useEffect(() => {
-  //   const countries = data.allGapminderJson.nodes.filter(country => country.year === 1955)
-  // }, [data.allGapminderJson.nodes])
-
-  return <Gapminder data={{ countries, year }}></Gapminder>
+  return <Gapminder data={{ countries, year, width }}></Gapminder>
 }
 
 export default GapminderData

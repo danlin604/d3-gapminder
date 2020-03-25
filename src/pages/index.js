@@ -1,6 +1,11 @@
 import React from 'react'
-// import * as d3 from 'd3'
-// import { graphql } from 'gatsby'
 import GapminderData from '../components/Gapminder.Data'
+import Layout from '../components/Layout'
 
-export default () => <GapminderData></GapminderData>
+export default () => {
+  return (
+    <Layout>
+      <GapminderData></GapminderData>
+    </Layout>
+  )
+}
