@@ -5,6 +5,7 @@
  */
 
 module.exports = {
+  pathPrefix: "/d3-gapminder",
   plugins: [
     `gatsby-transformer-json`,
     {
